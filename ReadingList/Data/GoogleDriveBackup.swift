@@ -26,8 +26,8 @@ public class GoogleDriveBackup {
     
     public func setup() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(GoogleDriveBackup.dataUpdated), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(GoogleDriveBackup.dataUpdated), name: Notification.Name.NSManagedObjectContextDidSave, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(GoogleDriveBackup.dataUpdated), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(GoogleDriveBackup.dataUpdated), name: Notification.Name.NSManagedObjectContextDidSave, object: nil)
         
     }
     
@@ -150,7 +150,7 @@ public class GoogleDriveBackup {
     }
     func currentBackupId(folderId:String,completion: @escaping (_ id:String?) -> Void) {
         let query = GTLRDriveQuery_FilesList.query()
-        query.q = "mimeType='text/plain' and name = 'Test Upload from API' and '\(folderId)' in parents and trashed = false"
+        query.q = "mimeType='text/plain' and name = 'ReadingList-Backup' and '\(folderId)' in parents and trashed = false"
         query.spaces = "drive"
         print("Excecuting query")
         
@@ -181,7 +181,7 @@ public class GoogleDriveBackup {
     func uploadFile(fileData:Data,parent:String) {
         
         let file = GTLRDrive_File()
-        file.name = "Test Upload from API"
+        file.name = "ReadingList-Backup"
         //to place in folder
         file.parents = [parent]
         
@@ -205,8 +205,8 @@ public class GoogleDriveBackup {
     }
     func updateFile(fileData:Data, fileId:String) {
         let file = GTLRDrive_File()
-        file.originalFilename = "Test Upload from API"
-        file.name = "Test Upload from API"
+        file.originalFilename = "ReadingList-Backup"
+        file.name = "ReadingList-Backup"
         //to place in folder
         //file.parents = [parent]
         

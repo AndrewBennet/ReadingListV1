@@ -26,7 +26,7 @@ class Settings: UITableViewController {
         }
         
         //Google Drive setup
-        GIDSignIn.sharedInstance().scopes = ["https://www.googleapis.com/auth/drive"]
+
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signInSilently()
     }
@@ -59,6 +59,21 @@ class Settings: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0, 1):
             UIApplication.shared.open(URL(string: "itms-apps://\(Settings.appStoreAddress)?action=write-review")!, options: [:])
+        case (1, 4):
+            if GIDSignIn.sharedInstance().currentUser == nil {
+                GIDSignIn.sharedInstance().signIn()
+            }
+            else {
+                let alert = UIAlertController(title: "Sign Out", message: "You are already signed into Google and your data is being synced. Do you want to sign out?", preferredStyle: .alert)
+                let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive) { (action) in
+                    GIDSignIn.sharedInstance().signOut()
+                }
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(signOutAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
         case (1, 3):
             let canSendMail = MFMailComposeViewController.canSendMail()
             var message = """

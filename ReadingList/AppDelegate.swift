@@ -30,11 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let quickAction = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
         let csvFileUrl = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL
         
-        
         // Setup Google Drive backup
         GIDSignIn.sharedInstance().clientID = "938491889218-vmj28rh94j2m51e1nv7i86rqn44va528.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         GoogleDriveBackup.DriveBackup.setup()
+        GIDSignIn.sharedInstance().scopes = ["https://www.googleapis.com/auth/drive"]
+        GIDSignIn.sharedInstance().signInSilently()
 
         // Initialise the persistent store on a background thread. The main thread will return and the LaunchScreen
         // storyboard will remain in place until this is completed, at which point the Main storyboard will be instantiated.
@@ -189,6 +190,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let theme = UserSettings.theme.value
         UIApplication.shared.statusBarStyle = theme.statusBarStyle
         theme.configureForms()
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        GoogleDriveBackup.DriveBackup.dataUpdated()
     }
 }
 
