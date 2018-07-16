@@ -17,6 +17,8 @@ target 'ReadingList' do
   pod 'Crashlytics'
   pod 'Firebase/Core'
   pod 'SwiftLint'
+  pod 'GoogleAPIClientForREST/Drive'
+  pod 'GoogleSignIn', '~> 4.1.1'
 
   target 'ReadingList_UITests' do
     inherit! :complete

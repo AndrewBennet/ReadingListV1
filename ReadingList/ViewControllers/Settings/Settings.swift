@@ -1,5 +1,6 @@
 import UIKit
 import MessageUI
+import GoogleSignIn
 
 class Settings: UITableViewController {
 
@@ -23,6 +24,11 @@ class Settings: UITableViewController {
                 self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
             }
         }
+        
+        //Google Drive setup
+        GIDSignIn.sharedInstance().scopes = ["https://www.googleapis.com/auth/drive"]
+        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -117,4 +123,7 @@ extension Settings: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true)
     }
+}
+extension Settings:GIDSignInUIDelegate {
+    
 }
