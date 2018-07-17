@@ -2,6 +2,9 @@ import UIKit
 import SVProgressHUD
 import SwiftyStoreKit
 import CoreData
+import GoogleSignIn
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 
 var appDelegate: AppDelegate {
     return UIApplication.shared.delegate as! AppDelegate
@@ -26,6 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Grab any options which we take action on after the persistent store is initialised
         let quickAction = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
         let csvFileUrl = launchOptions?[UIApplicationLaunchOptionsKey.url] as? URL
+        // Setup Google Drive backup
+        GIDSignIn.sharedInstance().clientID = "938491889218-vmj28rh94j2m51e1nv7i86rqn44va528.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().scopes = ["https://www.googleapis.com/auth/drive"]
+        GIDSignIn.sharedInstance().signInSilently()
 
         // Initialise the persistent store on a background thread. The main thread will return and the LaunchScreen
         // storyboard will remain in place until this is completed, at which point the Main storyboard will be instantiated.
@@ -180,6 +188,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let theme = UserSettings.theme.value
         UIApplication.shared.statusBarStyle = theme.statusBarStyle
         theme.configureForms()
+    }
+    func applicationWillResignActive(_ application: UIApplication) {
+        GoogleDriveBackup.DriveBackup.dataUpdated()
+    }
+}
+
+extension AppDelegate: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error != nil {
+            print("Error! \(error!.localizedDescription)")
+        } else {
+            print("Signed in succesfully")
+            GoogleDriveBackup.driveService = GTLRDriveService()
+            GoogleDriveBackup.driveService!.authorizer = user.authentication.fetcherAuthorizer()
+            //let name = NSNotification.Name("signedInG")
+            //NotificationCenter.default.post(name: name, object: nil)
+        }
     }
 }
 

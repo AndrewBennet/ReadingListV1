@@ -1,7 +1,8 @@
 import UIKit
 import MessageUI
+import GoogleSignIn
 
-class Settings: UITableViewController {
+class Settings: UITableViewController, GIDSignInUIDelegate {
 
     @IBOutlet private weak var header: XibView!
     static let appStoreAddress = "itunes.apple.com/gb/app/reading-list-book-tracker/id1217139955"
@@ -23,6 +24,8 @@ class Settings: UITableViewController {
                 self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
             }
         }
+        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -53,6 +56,19 @@ class Settings: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0, 1):
             UIApplication.shared.open(URL(string: "itms-apps://\(Settings.appStoreAddress)?action=write-review")!, options: [:])
+        case (1, 4):
+            if GIDSignIn.sharedInstance().currentUser == nil {
+                GIDSignIn.sharedInstance().signIn()
+            } else {
+                let alert = UIAlertController(title: "Sign Out", message: "You are already signed into Google and your data is being synced. Do you want to sign out?", preferredStyle: .alert)
+                let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive) { _ in
+                    GIDSignIn.sharedInstance().signOut()
+                }
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(signOutAction)
+                self.present(alert, animated: true, completion: nil)
+            }
         case (1, 3):
             let canSendMail = MFMailComposeViewController.canSendMail()
             var message = """
