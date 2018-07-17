@@ -172,7 +172,15 @@ extension Book {
 
     override func validateForUpdate() throws {
         try super.validateForUpdate()
+        try interPropertyValiatation()
+    }
 
+    override func validateForInsert() throws {
+        try super.validateForInsert()
+        try interPropertyValiatation()
+    }
+
+    func interPropertyValiatation() throws {
         // FUTURE: Check read state with current page
         switch readState {
         case .toRead:

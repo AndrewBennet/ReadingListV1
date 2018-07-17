@@ -45,7 +45,7 @@ class GoogleBooksTests: XCTestCase {
         let book = Book(context: testContainer.viewContext, readState: .toRead)
         book.populate(fromFetchResult: parseResult)
         XCTAssertEqual(book.authorSort, "beatty.paul")
-        XCTAssertEqual(book.authorDisplay, "Paul Beatty")
+        XCTAssertEqual(Author.authorDisplay(book.authors), "Paul Beatty")
     }
 
     func testGoogleBooksSearchParsing() {
