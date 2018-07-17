@@ -2,7 +2,7 @@ import UIKit
 import MessageUI
 import GoogleSignIn
 
-class Settings: UITableViewController {
+class Settings: UITableViewController, GIDSignInUIDelegate {
 
     @IBOutlet private weak var header: XibView!
     static let appStoreAddress = "itunes.apple.com/gb/app/reading-list-book-tracker/id1217139955"
@@ -24,9 +24,6 @@ class Settings: UITableViewController {
                 self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
             }
         }
-        
-        //Google Drive setup
-
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signInSilently()
     }
@@ -62,10 +59,9 @@ class Settings: UITableViewController {
         case (1, 4):
             if GIDSignIn.sharedInstance().currentUser == nil {
                 GIDSignIn.sharedInstance().signIn()
-            }
-            else {
+            } else {
                 let alert = UIAlertController(title: "Sign Out", message: "You are already signed into Google and your data is being synced. Do you want to sign out?", preferredStyle: .alert)
-                let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive) { (action) in
+                let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive) { _ in
                     GIDSignIn.sharedInstance().signOut()
                 }
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -73,7 +69,6 @@ class Settings: UITableViewController {
                 alert.addAction(signOutAction)
                 self.present(alert, animated: true, completion: nil)
             }
-            
         case (1, 3):
             let canSendMail = MFMailComposeViewController.canSendMail()
             var message = """
@@ -138,7 +133,4 @@ extension Settings: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true)
     }
-}
-extension Settings:GIDSignInUIDelegate {
-    
 }
