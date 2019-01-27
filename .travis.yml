@@ -13,11 +13,11 @@ cache:
 install: ./build/install.sh
 before_script: ./build/preprocess.sh
 script:
-  - bundle exec fastlane test
+  - bundle exec fastlane ci_build
 deploy:
   skip_cleanup: true
   provider: script
   script:
-    - bundle exec fastlane deploy
+    - bundle exec fastlane upload_build
   on:
     branch: master

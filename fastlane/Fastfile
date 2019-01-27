@@ -23,12 +23,14 @@ platform :ios do
     )
   end
 
-  desc "Push a new beta build to TestFlight (not externally released)"
-  lane :deploy do
-    if is_ci
-      configure_keychain
-    end
+  desc "Builds the app, handling signing in a CI-supported way."
+  lane :ci_build do
+    configure_keychain
     build_app(workspace: "ReadingList.xcworkspace", scheme: "ReadingList")
+  end
+
+  desc "Uploads the previously built binary to TestFlight"
+  lane :upload_build do
     upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true)
   end
 

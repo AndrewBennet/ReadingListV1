@@ -21,11 +21,16 @@ or alternatively using `brew cask install fastlane`
 fastlane ios test
 ```
 
-### ios deploy
+### ios ci_build
 ```
-fastlane ios deploy
+fastlane ios ci_build
 ```
-Push a new beta build to TestFlight (not externally released)
+Builds the app, handling signing in a CI-supported way.
+### ios upload_build
+```
+fastlane ios upload_build
+```
+Uploads the previously built binary to TestFlight
 ### ios publish
 ```
 fastlane ios publish
