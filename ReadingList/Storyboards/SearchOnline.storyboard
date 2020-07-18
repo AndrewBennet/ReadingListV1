@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u1U-1R-a4c">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u1U-1R-a4c">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-2221" y="705"/>
         </scene>
-        <!--Search Online-->
+        <!--Add New Book-->
         <scene sceneID="c1f-eY-hAM">
             <objects>
                 <tableViewController definesPresentationContext="YES" id="jSD-sd-NlC" customClass="SearchOnline" customModule="ReadingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -50,7 +50,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Search Online" id="2jM-cf-fXr">
+                    <navigationItem key="navigationItem" title="Add New Book" id="2jM-cf-fXr">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="0Sj-Mr-ZB6">
                             <connections>
                                 <action selector="cancelWasPressed:" destination="jSD-sd-NlC" id="y8o-dN-usi"/>
