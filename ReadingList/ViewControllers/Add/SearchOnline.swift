@@ -33,6 +33,7 @@ final class SearchOnline: UITableViewController {
         searchController.searchBar.autocapitalizationType = .words
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ScanBarcode"), style: .done, target: self, action: #selector(scanBarcodeButtonTapped))
 
         // If we have an entry-point search, fire it off now
         if let initialSearchString = initialSearchString {
@@ -67,6 +68,10 @@ final class SearchOnline: UITableViewController {
         } else {
             navigationController?.setToolbarHidden(false, animated: true)
         }
+    }
+
+    @objc fileprivate func scanBarcodeButtonTapped() {
+        self.present(UIStoryboard.ScanBarcode.rootAsFormSheet(), animated: true, completion: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
