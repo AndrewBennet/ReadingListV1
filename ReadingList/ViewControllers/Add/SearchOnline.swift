@@ -33,7 +33,14 @@ final class SearchOnline: UITableViewController {
         searchController.searchBar.autocapitalizationType = .words
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ScanBarcode"), style: .done, target: self, action: #selector(scanBarcodeButtonTapped))
+
+        var scanBarcodeImage: UIImage?
+        if #available(iOS 13.0, *) {
+            scanBarcodeImage = UIImage(systemName: "barcode.viewfinder")
+        } else {
+            scanBarcodeImage = UIImage(named: "ScanBarcode")
+        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: scanBarcodeImage, style: .done, target: self, action: #selector(scanBarcodeButtonTapped))
 
         // If we have an entry-point search, fire it off now
         if let initialSearchString = initialSearchString {
@@ -43,6 +50,8 @@ final class SearchOnline: UITableViewController {
         selectModeButton.onToggle = { _ in
             self.changeSelectMode()
         }
+
+        emptyDatasetView.delegate = self
 
         monitorThemeSetting()
     }
@@ -328,5 +337,11 @@ extension SearchOnline: UISearchBarDelegate {
         if searchText.isEmpty {
             displaySearchResults(nil)
         }
+    }
+}
+
+extension SearchOnline: SearchBooksEmptyDatasetDelegate {
+    func searchBooksEmptyDataSetDidTapAddManuallyButton() {
+        present(EditBookMetadata(bookToCreateReadState: .toRead).inThemedNavController(), animated: true, completion: nil)
     }
 }

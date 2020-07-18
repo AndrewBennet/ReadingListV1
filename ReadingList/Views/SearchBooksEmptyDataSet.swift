@@ -1,17 +1,28 @@
 import Foundation
 import UIKit
 
+protocol SearchBooksEmptyDatasetDelegate: class {
+    func searchBooksEmptyDataSetDidTapAddManuallyButton()
+}
+
 class SearchBooksEmptyDataset: UIView {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var poweredByGoogle: UIImageView!
+    @IBOutlet private weak var addManuallyButton: UIButton!
     @IBOutlet private weak var topConstraint: NSLayoutConstraint!
+
+    weak var delegate: SearchBooksEmptyDatasetDelegate?
 
     enum EmptySetReason {
         case noSearch
         case noResults
         case error
+    }
+
+    @IBAction private func addManuallyButtonTapped() {
+        self.delegate?.searchBooksEmptyDataSetDidTapAddManuallyButton()
     }
 
     func initialise(fromTheme theme: Theme) {

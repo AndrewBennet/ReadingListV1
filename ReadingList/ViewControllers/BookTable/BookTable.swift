@@ -443,20 +443,7 @@ final class BookTable: UITableViewController { //swiftlint:disable:this type_bod
     }
 
     @IBAction private func addWasPressed(_ sender: UIBarButtonItem) {
-        let optionsAlert = UIAlertController(title: "Add New Book", message: nil, preferredStyle: .actionSheet)
-        optionsAlert.addAction(UIAlertAction(title: "Scan Barcode", style: .default) { _ in
-            self.present(UIStoryboard.ScanBarcode.rootAsFormSheet(), animated: true, completion: nil)
-        })
-        optionsAlert.addAction(UIAlertAction(title: "Search Online", style: .default) { _ in
-            self.present(UIStoryboard.SearchOnline.rootAsFormSheet(), animated: true, completion: nil)
-        })
-        optionsAlert.addAction(UIAlertAction(title: "Add Manually", style: .default) { _ in
-            self.present(EditBookMetadata(bookToCreateReadState: .toRead).inThemedNavController(), animated: true, completion: nil)
-        })
-        optionsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        optionsAlert.popoverPresentationController?.barButtonItem = sender
-
-        present(optionsAlert, animated: true, completion: nil)
+        self.present(UIStoryboard.SearchOnline.rootAsFormSheet(), animated: true, completion: nil)
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
