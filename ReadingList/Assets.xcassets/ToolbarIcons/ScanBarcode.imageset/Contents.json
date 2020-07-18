@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-barcode (2).png",
+      "filename" : "ScanBarcode@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-barcode (1).png",
+      "filename" : "ScanBarcode@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
