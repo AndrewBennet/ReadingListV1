@@ -348,7 +348,7 @@ final class BookTable: UITableViewController { //swiftlint:disable:this type_bod
         })
 
         if let initialSelectionReadState = selectedReadStates.first, initialSelectionReadState != .finished, selectedReadStates.count == 1 {
-            let title = (initialSelectionReadState == .toRead ? "Start" : "Finish") + (selectedRows.count > 1 ? " All" : "")
+            let title = (initialSelectionReadState == .toRead ? "Start" : "Finish") + (selectedRows.count > 1 ? " \(selectedRows.count)" : "")
             optionsAlert.addAction(UIAlertAction(title: title, style: .default) { _ in
 
                 // We need to manage the sort indices manually, since we will be saving the batch operation at once
@@ -374,7 +374,7 @@ final class BookTable: UITableViewController { //swiftlint:disable:this type_bod
             })
         }
 
-        optionsAlert.addAction(UIAlertAction(title: "Delete\(selectedRows.count > 1 ? " All" : "")", style: .destructive) { _ in
+        optionsAlert.addAction(UIAlertAction(title: "Delete\(selectedRows.count > 1 ? " \(selectedRows.count)" : "")", style: .destructive) { _ in
             let confirm = self.confirmDeleteAlert(indexPaths: selectedRows) { didDelete in
                 // Once the deletion has happened, switch editing mode off. Do this on the next run loop to avoid
                 // messing with the row deletion animations
